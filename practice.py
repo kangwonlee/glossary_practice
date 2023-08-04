@@ -14,7 +14,9 @@ def main(argv):
     words = list(glossary.keys())
     random.shuffle(words)
 
-    for word in words:
+    n = len(words)
+
+    for i, word in enumerate(words):
         v = random.randint(0, 1)
 
         three_others = random.sample(words, 3)
@@ -23,27 +25,33 @@ def main(argv):
 
         random.shuffle(choices)
 
+        print(f"{'#' * 20}\n{i+1}/{n}")
+
+        ans = None
         if v:
             print(word)
             print('=' * 20)
             for j, w in enumerate(choices):
                 print(j+1, glossary[w])
+                print()
+                if w == word:
+                    ans = j+1
             input()
 
             print('#' * 20)
-            print(glossary[word])
+            print(ans, glossary[word])
         else:
             print(glossary[word])
             print('=' * 20)
             for j, w in enumerate(choices):
                 print(j+1, w)
                 print()
+                if w == word:
+                    ans = j+1
             input()
 
             print('#' * 20)
-            print(word)
-
-        print('#' * 20)
+            print(ans, word)
 
 
 def get_flat_glossary(argv:List[str]) -> dict:
