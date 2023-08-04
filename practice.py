@@ -36,9 +36,10 @@ def main(argv):
                 print()
                 if w == word:
                     ans = j+1
-            input()
+            reply=int(input())
 
             print('#' * 20)
+            print("correct" if reply == ans else "wrong")
             print(ans, glossary[word])
         else:
             print(glossary[word])
@@ -48,9 +49,10 @@ def main(argv):
                 print()
                 if w == word:
                     ans = j+1
-            input()
+            reply=int(input())
 
             print('#' * 20)
+            print("correct" if reply == ans else "wrong")
             print(ans, word)
 
 
