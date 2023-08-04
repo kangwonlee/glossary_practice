@@ -8,8 +8,38 @@ def main(argv):
     glossary_json = read_glossary(json_path)
 
     glob = proj_path().glob("*.glossary")
-    print(tuple(glob))
-    print(TypeError(glossary_json))
+
+    for fpath in glob:
+        glossary_name = fpath.relative_to(proj_path()).stem
+        print(f"Processing {glossary_name}...")
+        sub_glossary = glossary_json.get(glossary_name, {})
+        sub_glossary.update(process_glossary(fpath))
+
+    json_path.write_text(json.dumps(glossary_json, indent=4))
+
+
+def process_glossary(fpath:pathlib.Path) -> dict:
+    """
+    Read a glossary file and return a dictionary of terms and definitions.
+    """
+    assert isinstance(fpath, pathlib.Path), fpath
+    assert fpath.exists()
+    assert fpath.is_file()
+
+    txt = fpath.read_text()
+    lines = txt.splitlines()
+
+    glossary = {}
+
+    for line in lines:
+        i = line.index(" - ")
+        key = line[:i]
+        value = line[i+3:]
+
+        assert key not in glossary, key
+        glossary[key] = value
+
+    return glossary
 
 
 def script_path() -> pathlib.Path:
