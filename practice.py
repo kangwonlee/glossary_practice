@@ -1,6 +1,7 @@
 import pathlib
 import random
 import sys
+from typing import List
 
 sys.path.append(str(pathlib.Path(__file__).parent.absolute()))
 
@@ -8,13 +9,7 @@ import path
 
 
 def main(argv):
-    json_path = path.get_json_path(argv)
-    glossary_json = path.read_glossary(json_path)
-
-    # flatten the glossary
-    glossary = {}
-    for sub_glossary in glossary_json.values():
-        glossary.update(sub_glossary)
+    glossary = get_flat_glossary(argv)
 
     words = list(glossary.keys())
     random.shuffle(words)
@@ -31,6 +26,17 @@ def main(argv):
             input()
             print(word)
             input()
+
+
+def get_flat_glossary(argv:List[str]) -> dict:
+    glossary_json = path.read_glossary(path.get_json_path(argv))
+
+    glossary = {}
+
+    for sub_glossary in glossary_json.values():
+        glossary.update(sub_glossary)
+
+    return glossary
 
 
 if "__main__" == __name__:
