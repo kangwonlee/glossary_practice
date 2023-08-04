@@ -1,9 +1,13 @@
+import datetime
 import pathlib
 import random
 import sys
+import time
+
 from typing import List
 
 sys.path.append(str(pathlib.Path(__file__).parent.absolute()))
+
 
 import path
 
@@ -16,6 +20,8 @@ def main(argv):
 
     n = len(words)
 
+    start_time = time.time()
+
     for i, word in enumerate(words):
         v = random.randint(0, 1)
 
@@ -25,7 +31,7 @@ def main(argv):
 
         random.shuffle(choices)
 
-        print(f"{'#' * 20}\n{i+1}/{n}")
+        print(f"{'#' * 20} {str(datetime.timedelta(seconds=(time.time()-start_time)))}\n{i+1}/{n}")
 
         ans = None
         if v:
