@@ -34,8 +34,8 @@ def process_glossary(fpath:pathlib.Path) -> dict:
 
     for line in lines:
         i = line.index(" - ")
-        key = line[:i]
-        value = line[i+3:]
+        key = line[:i].strip()
+        value = line[i+3:].strip()
 
         assert key not in glossary, key
         glossary[key] = value
