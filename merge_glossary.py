@@ -14,6 +14,7 @@ def main(argv):
         print(f"Processing {glossary_name}...")
         sub_glossary = glossary_json.get(glossary_name, {})
         sub_glossary.update(process_glossary(fpath))
+        glossary_json[glossary_name] = sub_glossary
 
     json_path.write_text(json.dumps(glossary_json, indent=4))
 
